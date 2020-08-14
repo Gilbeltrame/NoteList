@@ -1,18 +1,34 @@
-import React from 'react';
-import ListaDeNotas from './Components/noteList.jsx'
+import React, {Component} from 'react';
+import ListaDeNotas from './Components/NoteList'
+import Formulario from './Components/Form'
+import './Assets/App.css'
+import './Assets/index.css';
 
+export default class App extends Component {
+  
+  constructor(){
+    super();
+    this.state= {
+      notes: []
+    }
+  }
 
-function App() {
-  return (
-    <div>
-      <form>
-        <input placeholder="título"/>
-        <textarea placeholder="escreva aqui"/>
-        <button>Criar Nota</button>
-      </form>
-      <ListaDeNotas/>
-    </div>
-  )
+  showNote(title,text) {
+    const newNote = {title,text}
+    const newArrayNotes = [...this.state.notes,newNote]
+    const newState = {
+      notes:newArrayNotes
+    }
+
+    this.setState(newState)}
+
+  
+  render() {
+    return (
+      <section className="conteudo">
+        <Formulario showNote={this.showNote.bind(this)}/>
+        <ListaDeNotas notes={this.state.notes}/>
+      </section>
+    )
+  }
 }
-
-export default App;
