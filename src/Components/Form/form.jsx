@@ -6,8 +6,25 @@ class Formulario extends Component {
     constructor(props){
         super(props)
         this.title=""
-        this.text="" //
+        this.text=""
+        this.categoria = ""
+
+        this.state = {categorias: []}
+        this._novasCategorias = this._novasCategorias.bind(this);
     }
+
+    componentDidMount(){
+        this.props.categorias.inscrever(this._novasCategorias)
+    }
+
+    componentWillUnmount(){
+        this.props.categorias.desinscrever(this._novasCategorias)
+    }
+
+    _novasCategorias(categorias) {
+        this.setState({...this.state, categorias})
+    }
+
     _handleChangeTitle(e){
         e.stopPropagation();
         this.title = e.target.value
@@ -18,10 +35,15 @@ class Formulario extends Component {
         this.text = e.target.value
     }
 
+    _handleChangeCategoria(e){
+        e.stopPropagation();
+        this.categoria = e.target.value;
+    }
+
     _createNote(e){
         e.preventDefault();
         e.stopPropagation();
-        this.props.showNote(this.title, this.text);
+        this.props.showNote(this.title, this.text, this.categoria);
         }
 
     render() {
@@ -30,10 +52,19 @@ class Formulario extends Component {
                 onSubmit={this._createNote.bind(this)}>
             
             <select 
+            onChange={this._handleChangeCategoria.bind(this)}
             className="form-cadastro_input"
             placeholder="Categorias">
-                {this.props.categorias.map((categoria)=>{
-                    return (<option>{categoria}</option>)
+
+                <option defaultChecked={true}>
+                    Selecione a Categoria
+                </option>
+
+                {this.state.categorias.map((categoria, index)=>{
+                    return (
+                    <option key={index}>
+                        {categoria}
+                    </option>)
                 })}
             </select>
             <input 
