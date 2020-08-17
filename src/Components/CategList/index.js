@@ -16,7 +16,7 @@ export default class ListaDeCategorias extends Component {
     }
 
     componentWillUnmount(){
-        this.props.categorias.inscrever(this._novasCategorias)
+        this.props.categorias.desinscrever(this._novasCategorias)
     }
 
     _novasCategorias(categorias){
