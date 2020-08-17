@@ -10,3 +10,6 @@
     --fundo-detalhes: #ececec;
   }
   
+  .conteudo-principal{
+    flex-grow: 3;
+  }
